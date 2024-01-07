@@ -7,15 +7,15 @@ import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 const FBXModel = (props:{setActionName: React.Dispatch<React.SetStateAction<string>>}) => {
   /* FBXモデル読込み */
-  const fbx = useLoader(FBXLoader, "./assets/Ch09_nonPBR.fbx");
+  const fbx = useLoader(FBXLoader, "assets/Ch09_nonPBR.fbx");
   /* AnimationClip(s)読込み */
   const animCrips: THREE.AnimationClip[][] = []
-  animCrips[0] = useFBX('/assets/BreakdanceEnding2.fbx').animations
-  animCrips[1] = useFBX('/assets/BreakdanceUprockVar1.fbx').animations
-  animCrips[2] = useFBX('/assets/HipHopDancing.fbx').animations
-  animCrips[3] = useFBX('/assets/NorthernSoulSpin.fbx').animations
-  animCrips[4] = useFBX('/assets/SwingDancing.fbx').animations
-  animCrips[5] = useFBX('/assets/BreakdanceEnding1.fbx').animations
+  animCrips[0] = useFBX('./assets/BreakdanceEnding2.fbx').animations
+  animCrips[1] = useFBX('./assets/BreakdanceUprockVar1.fbx').animations
+  animCrips[2] = useFBX('./assets/HipHopDancing.fbx').animations
+  animCrips[3] = useFBX('./assets/NorthernSoulSpin.fbx').animations
+  animCrips[4] = useFBX('./assets/SwingDancing.fbx').animations
+  animCrips[5] = useFBX('./assets/BreakdanceEnding1.fbx').animations
   const animNames = ['BreakdanceEnding2', 'BreakdanceUprockVar1', 'HipHopDancing', 'NorthernSoulSpin', 'SwingDancing', 'BreakdanceEnding1']
   /* 変数定義 */
   const mixer = useRef<THREE.AnimationMixer>();
