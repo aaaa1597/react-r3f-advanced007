@@ -1,3 +1,11 @@
 #root {
   background: #000000;
 }
+#summry {
+  position: absolute;
+  left: 5%;
+  top: 10px;
+  filter: drop-shadow(1px 1px 1px #000000);
+  font-size: 1.5em;
+  color: deeppink;
+}

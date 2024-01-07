@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { OrbitControls, Environment, useFBX } from '@react-three/drei'
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
-const FBXModel = () => {
+const FBXModel = (props:{setActionName: React.Dispatch<React.SetStateAction<string>>}) => {
   /* FBXモデル読込み */
   const fbx = useLoader(FBXLoader, "./assets/Ch09_nonPBR.fbx");
   /* AnimationClip(s)読込み */
@@ -16,6 +16,7 @@ const FBXModel = () => {
   animCrips[3] = useFBX('/assets/NorthernSoulSpin.fbx').animations
   animCrips[4] = useFBX('/assets/SwingDancing.fbx').animations
   animCrips[5] = useFBX('/assets/BreakdanceEnding1.fbx').animations
+  const animNames = ['BreakdanceEnding2', 'BreakdanceUprockVar1', 'HipHopDancing', 'NorthernSoulSpin', 'SwingDancing', 'BreakdanceEnding1']
   /* 変数定義 */
   const mixer = useRef<THREE.AnimationMixer>();
   const [ animIdx, setAnimIdx ] = useState<number>(0);
@@ -35,6 +36,7 @@ const FBXModel = () => {
   useEffect(() => {
     const act: THREE.AnimationAction = animActions[animIdx]
     act?.reset().fadeIn(0.3).play()
+    props.setActionName(animNames[animIdx] + ' : ' + animIdx)
     return () => {
       act?.fadeOut(0.3)
     }
@@ -47,7 +49,6 @@ const FBXModel = () => {
     const currenttime: number = animActions[animIdx].time
     if(currenttime/durationtime > 0.9/*90%を超えたら次のモーションへ*/) {
       const index: number = (animIdx+1) % (animCrips.length)
-      console.log('index=', index)
       setAnimIdx( index )
     }
   });
@@ -58,19 +59,22 @@ const FBXModel = () => {
 }
 
 const App = () => {
+  const [actionName, setActionName] = useState<string>('aaabbb');
+
   return (
     <div style={{ width: "100vw", height: "75vh" }}>
       <Canvas camera={{ position: [3, 1, 3] }}>
         <ambientLight intensity={2} />
         <pointLight position={[40, 40, 40]} />
         <Suspense fallback={null}>
-          <FBXModel />
+          <FBXModel setActionName={setActionName}/>
         </Suspense>
         <OrbitControls />
         <Environment preset="forest" background />
         <axesHelper args={[5]} />
         <gridHelper />
       </Canvas>
+      <div id="summry">{actionName}</div>
     </div>
   );
 }
